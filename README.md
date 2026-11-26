@@ -3,17 +3,16 @@
 **Estudiante:** MACIAS VÁSQUEZ CÉSAR ABRAHAN  
 **Asignatura:** Aplicaciones Distribuidas — Séptimo Nivel, Paralelo "B"  
 **Docente:** Gleiston Cicerón Guerrero Ulloa, PhD  
-**Periodo Académico:** SPA 2026–2027  
-**Caso analizado:** Amazon (estilo arquitectónico: Microservicios)
+**Periodo Académico:** SPA 2026–2027
 
 ## Estructura del repositorio
 
 ```text
 .
 ├── README.md                              # Instrucciones de compilación y estructura del proyecto
-├── main.tex                               # Documento LaTeX principal (carátula, análisis de 1 página, evidencias y referencias)
-├── main.pdf                               # Documento principal compilado
-├── referencias.bib                        # Base bibliográfica en formato BibLaTeX (fuentes oficiales de Amazon/AWS y artículos IEEE)
+├── informe.tex                            # Documento LaTeX principal (carátula, análisis de 1 página, evidencias y referencias)
+├── informe.pdf                            # Documento principal compilado
+├── referencias.bib                        # Base bibliográfica en formato BibLaTeX (estilo IEEE)
 ├── img/
 │   └── logo_uteq.png                      # Logotipo institucional empleado en la carátula
 ├── capturas/
@@ -25,21 +24,21 @@
 
 ## Instrucciones de compilación
 
-### 1. Documento principal (`main.tex`)
+### 1. Informe principal (`informe.tex`)
 
 * **Compilador:** `pdflatex` (distribución TeX Live o MiKTeX)
 * **Gestor bibliográfico:** `biber` (backend de `biblatex`, estilo `ieee`)
-* **Archivo principal:** `main.tex`
+* **Archivo principal:** `informe.tex`
 * **Orden de comandos:**
 
 ```bash
-pdflatex main.tex
-biber main
-pdflatex main.tex
-pdflatex main.tex
+pdflatex informe.tex
+biber informe
+pdflatex informe.tex
+pdflatex informe.tex
 ```
 
-### 2. Documento de entrega en el SGA (`sga/entrega_sga.tex`)
+### 2. Carátula de entrega en el SGA (`sga/entrega_sga.tex`)
 
 ```bash
 cd sga
@@ -49,10 +48,8 @@ pdflatex entrega_sga.tex
 
 ### Dependencias de LaTeX requeridas
 
-Los archivos `.tex` utilizan los siguientes paquetes estándar de CTAN:
 * `inputenc` (`utf8`), `fontenc` (`T1`), `babel` (`spanish`)
-* `mathptmx` (tipografía Times)
-* `geometry`, `setspace`, `parskip`, `titlesec`, `enumitem`
-* `graphicx`, `float`, `caption`, `xcolor`, `framed`
-* `hyperref`, `url`
+* `mathptmx`
+* `geometry`, `titlesec`, `enumitem`, `float`, `graphicx`, `xcolor`
+* `hyperref`
 * `csquotes`, `biblatex` (con `backend=biber` y `style=ieee`)

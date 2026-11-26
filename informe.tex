@@ -45,7 +45,7 @@
     \vspace{1.3cm}
     {\fontsize{14}{18}\selectfont\bfseries Investigación individual: arquitecturas distribuidas en la industria\par}
     \vspace{0.3cm}
-    {\fontsize{11.5}{14}\selectfont\bfseries Código: FORM-IC-01\par}
+    {\fontsize{11.5}{14}\selectfont\bfseries Código: FORM-IC-01 -- Caso de estudio: Amazon (Microservicios)\par}
 
     \vspace{1.5cm}
     {\fontsize{12}{15}\selectfont\bfseries Estudiante:\par}
@@ -68,22 +68,23 @@
 \pagenumbering{arabic}
 
 % ==================== ANÁLISIS (1 PÁGINA SIN CONTAR CARÁTULA NI REFERENCIAS) ====================
-\section*{Análisis del caso: [Nombre de la empresa -- Estilo arquitectónico]}
+\section*{Análisis del caso: Amazon (Microservicios)}
 
 \subsection*{1. Descripción del caso}
-\textit{[Redactar de autoría propia: qué empresa es, qué sistema en producción opera con el estilo elegido (SOA, microservicios, EDA o API Gateway) y a qué escala funciona, citando cifras verificables de la fuente oficial \cite{fuente_oficial_caso}.]}
+Amazon opera su plataforma global de comercio electrónico (Amazon.com) y los servicios de Amazon Web Services (AWS) mediante una arquitectura de \textbf{microservicios}, basada en descomponer capacidades de negocio en servicios pequeños, autónomos y desplegables de forma independiente. La escala documentada en sus publicaciones oficiales muestra volúmenes masivos en producción: Amazon S3 inició en 2006 con cerca de ocho servicios y creció hasta superar los \textbf{300 microservicios} especializados en gestión de almacenamiento y políticas \cite{vogels2023monoliths}. Asimismo, durante el evento Prime Day 2025, la infraestructura que respalda a Amazon.com alcanzó picos de \textbf{151 millones de solicitudes por segundo} en Amazon DynamoDB y más de \textbf{1.7 billones ($1.7 \times 10^{12}$) de invocaciones diarias} en AWS Lambda, manteniendo tiempos de respuesta de milisegundos de un solo dígito \cite{yun2025primeday}.
 
 \subsection*{2. Por qué la empresa eligió ese estilo arquitectónico y qué tenía antes}
-\textit{[Redactar de autoría propia: describir la arquitectura previa de la empresa, las limitaciones que enfrentaba y los motivos técnicos u organizacionales por los que adoptó el estilo arquitectónico actual \cite{fuente_oficial_caso, ref_academica_1}.]}
+En sus inicios, Amazon operaba con una aplicación monolítica en C++ conocida internamente como \emph{Obidos}, acoplada directamente a bases de datos compartidas. A partir de su \emph{Distributed Computing Manifesto}, la organización inició una transición hacia una arquitectura orientada a servicios (SOA) y luego hacia microservicios desacoplados \cite{vogels2023monoliths}.
+\textit{[Completar aquí de autoría propia: explicar qué problemas generaba el monolito al crecer el catálogo y los equipos, y por qué la autonomía por servicio resolvió esos cuellos de botella, apoyándote en \cite{velepucha2023survey}.]}
 
 \subsection*{3. Beneficios obtenidos}
-\textit{[Redactar de autoría propia: detallar las mejoras alcanzadas tras la adopción del estilo, incluyendo datos medibles cuando la fuente oficial los proporcione y contrastando con la literatura académica \cite{fuente_oficial_caso, ref_academica_1}.]}
+\textit{[Completar aquí de autoría propia: detallar los beneficios de escalabilidad independiente, aislamiento de fallos y velocidad de despliegue observados en Amazon, contrastando con los hallazgos de rendimiento de Blinowski et al. \cite{blinowski2022monolithic} y citando métricas de \cite{vogels2023monoliths, yun2025primeday}.]}
 
 \subsection*{4. Desafíos encontrados y cómo los resolvió la empresa}
-\textit{[Redactar de autoría propia: explicar los problemas técnicos u operativos surgidos en producción y las estrategias o patrones aplicados por la empresa para mitigarlos \cite{fuente_oficial_caso, ref_academica_2}.]}
+\textit{[Completar aquí de autoría propia: describir los retos de latencia en red, llamadas en cascada, consistencia de datos y complejidad operativa en microservicios según \cite{blinowski2022monolithic, velepucha2023survey}, y explicar cómo Amazon adopta un enfoque pragmático/evolutivo \cite{vogels2023monoliths} y mecanismos de resiliencia (p. ej., timeouts, retries con backoff o load shedding).]}
 
 \subsection*{5. Cómo se aplica al proyecto propio (PFC)}
-\textit{[Redactar de autoría propia: indicar qué elementos de este caso tomarías para el PFC de tu equipo, cuáles descartarías y por qué, considerando el alcance, tamaño del equipo y carga esperada \cite{ref_academica_1, ref_academica_2}.]}
+\textit{[Completar aquí de autoría propia: indicar qué prácticas del caso Amazon aplicarías al PFC de tu equipo (por ejemplo, separación clara de dominios o límites de servicio en TurnoJusto), qué no adoptarías (como fragmentación excesiva desde el inicio) y por qué.]}
 
 \clearpage
 
@@ -91,20 +92,20 @@
 \section*{Evidencias de autoría}
 
 \subsection*{1. Captura de la fuente principal con fragmentos subrayados o anotados}
-\textit{[Reemplazar la imagen en \texttt{capturas/captura\_fuente\_principal.png} por la captura de pantalla real de la fuente principal con los fragmentos subrayados o anotados.]}
+\textit{[Reemplazar el archivo \texttt{capturas/captura\_fuente\_principal.png} por tu captura de pantalla de \url{https://www.allthingsdistributed.com/2023/05/monoliths-are-not-dinosaurs.html} (o del blog de Prime Day 2025) con los fragmentos que subrayaste o anotaste.]}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.92\textwidth]{capturas/captura_fuente_principal.png}
-    \caption{Captura de la fuente principal del caso con fragmentos subrayados o anotados \cite{fuente_oficial_caso}.}
+    \caption{Captura de la fuente principal del caso con fragmentos subrayados o anotados \cite{vogels2023monoliths}.}
     \label{fig:captura_fuente}
 \end{figure}
 
 \subsection*{2. Ejemplo de un sistema conocido de primera mano}
-\textit{[Describir de autoría propia un sistema que utilices o conozcas de primera mano en el que reconozcas el mismo estilo arquitectónico y justificar por qué.]}
+\textit{[Describir de autoría propia un sistema que utilices o conozcas de primera mano (p. ej., GitHub, Spotify, Mercado Libre o Uber) en el que reconozcas una arquitectura de microservicios y explicar cómo se refleja en su funcionamiento.]}
 
 \subsection*{3. Declaración de uso de inteligencia artificial}
-\textit{[Indicar de forma explícita y transparente si se utilizó alguna herramienta de inteligencia artificial, en qué etapa se empleó y confirmar la revisión y autoría final del contenido.]}
+\textit{[Indicar de manera explícita si utilizaste alguna herramienta de IA, para qué tareas puntuales (p. ej., estructuración en \LaTeX{} o búsqueda inicial de fuentes) y confirmar que la redacción final y verificación de fuentes son de tu autoría.]}
 
 \clearpage
 

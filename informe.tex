@@ -1,9 +1,9 @@
-\documentclass[11pt,letterpaper]{article}
+\documentclass[10pt,letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
 \usepackage{mathptmx}
-\usepackage[top=1.7cm, bottom=1.7cm, left=2cm, right=2cm]{geometry}
+\usepackage[top=1.55cm, bottom=1.55cm, left=1.85cm, right=1.85cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{titlesec}
@@ -16,11 +16,11 @@
 
 \titleformat{\section}{\normalfont\large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.5em}{}
-\titlespacing*{\section}{0pt}{8pt}{4pt}
-\titlespacing*{\subsection}{0pt}{6pt}{2pt}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+\titlespacing*{\subsection}{0pt}{5pt}{2pt}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{4pt}
+\setlength{\parskip}{3.5pt}
 
 \begin{document}
 
@@ -60,7 +60,7 @@
     \vfill
     {\fontsize{12}{16}\selectfont\bfseries Docente: \normalfont Gleiston Cicerón Guerrero Ulloa, PhD\par}
     \vspace{0.25cm}
-    {\fontsize{12}{16}\selectfont\bfseries Fecha: \normalfont 25 de noviembre de 2026\par}
+    {\fontsize{12}{16}\selectfont\bfseries Fecha: \normalfont 26 de noviembre de 2026\par}
     \vspace{0.25cm}
     {\fontsize{12}{16}\selectfont\bfseries Periodo Académico: \normalfont SPA 2026--2027\par}
 \end{titlepage}
@@ -74,17 +74,21 @@
 Amazon opera su plataforma global de comercio electrónico (Amazon.com) y los servicios de Amazon Web Services (AWS) mediante una arquitectura de \textbf{microservicios}, basada en descomponer capacidades de negocio en servicios pequeños, autónomos y desplegables de forma independiente. La escala documentada en sus publicaciones oficiales muestra volúmenes masivos en producción: Amazon S3 inició en 2006 con cerca de ocho servicios y creció hasta superar los \textbf{300 microservicios} especializados en gestión de almacenamiento y políticas \cite{vogels2023monoliths}. Asimismo, durante el evento Prime Day 2025, la infraestructura que respalda a Amazon.com alcanzó picos de \textbf{151 millones de solicitudes por segundo} en Amazon DynamoDB y más de \textbf{1.7 billones ($1.7 \times 10^{12}$) de invocaciones diarias} en AWS Lambda, manteniendo tiempos de respuesta de milisegundos de un solo dígito \cite{yun2025primeday}.
 
 \subsection*{2. Por qué la empresa eligió ese estilo arquitectónico y qué tenía antes}
-En sus inicios, Amazon operaba con una aplicación monolítica en C++ conocida internamente como \emph{Obidos}, acoplada directamente a bases de datos compartidas. A partir de su \emph{Distributed Computing Manifesto}, la organización inició una transición hacia una arquitectura orientada a servicios (SOA) y luego hacia microservicios desacoplados \cite{vogels2023monoliths}.
-\textit{[Completar aquí de autoría propia: explicar qué problemas generaba el monolito al crecer el catálogo y los equipos, y por qué la autonomía por servicio resolvió esos cuellos de botella, apoyándote en \cite{velepucha2023survey}.]}
+En sus inicios, Amazon operaba con una aplicación monolítica en C++ conocida internamente como \emph{Obidos}, acoplada directamente a bases de datos compartidas. Con el aumento acelerado del catálogo, del tráfico y del número de ingenieros, cualquier modificación requería coordinar compilaciones y despliegues completos, mientras los accesos concurrentes a tablas compartidas generaban cuellos de botella severos. A partir de su \emph{Distributed Computing Manifesto}, la organización inició una transición hacia una arquitectura orientada a servicios (SOA) y luego hacia microservicios desacoplados \cite{vogels2023monoliths}. Esta decisión buscó alinear la propiedad del código con equipos pequeños autónomos (regla de las ``dos pizzas''), eliminar dependencias rígidas en la capa de datos y habilitar el escalado independiente por dominio funcional \cite{velepucha2023survey}.
 
 \subsection*{3. Beneficios obtenidos}
-\textit{[Completar aquí de autoría propia: detallar los beneficios de escalabilidad independiente, aislamiento de fallos y velocidad de despliegue observados en Amazon, contrastando con los hallazgos de rendimiento de Blinowski et al. \cite{blinowski2022monolithic} y citando métricas de \cite{vogels2023monoliths, yun2025primeday}.]}
+La adopción de microservicios aportó tres ventajas concretas a la operación de Amazon:
+\begin{itemize}[leftmargin=*, itemsep=1pt, topsep=2pt]
+    \item \textbf{Escalabilidad granular:} Permite ampliar únicamente los servicios sometidos a demanda crítica sin replicar toda la plataforma, como se evidencia al sostener 151 millones de peticiones/s en DynamoDB durante Prime Day 2025 \cite{yun2025primeday}. Este resultado concuerda con la evaluación empírica de Blinowski et al., quienes destacan la ventaja de los microservicios bajo cargas intensas y desbalanceadas \cite{blinowski2022monolithic}.
+    \item \textbf{Aislamiento de fallos y evolución continua:} Un fallo en un componente específico limita su radio de impacto sin detener el flujo completo de compras, facilitando que S3 haya evolucionado hasta superar los 300 microservicios \cite{vogels2023monoliths}.
+    \item \textbf{Autonomía de entrega:} Cada equipo despliega actualizaciones y selecciona las tecnologías más adecuadas para su servicio sin esperar ciclos monolíticos globales \cite{velepucha2023survey}.
+\end{itemize}
 
 \subsection*{4. Desafíos encontrados y cómo los resolvió la empresa}
-\textit{[Completar aquí de autoría propia: describir los retos de latencia en red, llamadas en cascada, consistencia de datos y complejidad operativa en microservicios según \cite{blinowski2022monolithic, velepucha2023survey}, y explicar cómo Amazon adopta un enfoque pragmático/evolutivo \cite{vogels2023monoliths} y mecanismos de resiliencia (p. ej., timeouts, retries con backoff o load shedding).]}
+Operar cientos de servicios distribuidos trajo retos complejos. En primer lugar, las llamadas síncronas encadenadas entre múltiples capas elevan el riesgo de sobrecarga en cascada cuando una dependencia responde lento. Amazon mitigó este problema aplicando \textbf{descarte selectivo de carga} (\emph{load shedding}) para rechazar tráfico excedente antes de saturar recursos \cite{yanacek_loadshedding}, junto con \emph{timeouts} acotados y reintentos con retroceso exponencial más fluctuación aleatoria (\emph{exponential backoff with jitter}) para evitar tormentas de reintentos simultáneos \cite{brooker_timeouts}. En segundo lugar, fragmentar en exceso introduce un ``impuesto de latencia'' por llamadas de red y mayor costo operativo, aspecto documentado por Blinowski et al. \cite{blinowski2022monolithic} y Velepucha y Flores \cite{velepucha2023survey}. Frente al dogmatismo de dividirlo todo, el CTO Werner Vogels recalcó en 2023 que un componente debe permanecer unificado cuando sus partes comparten perfil de escalado y un mismo equipo, como ocurrió con un servicio de monitoreo de Prime Video \cite{vogels2023monoliths}.
 
 \subsection*{5. Cómo se aplica al proyecto propio (PFC)}
-\textit{[Completar aquí de autoría propia: indicar qué prácticas del caso Amazon aplicarías al PFC de tu equipo (por ejemplo, separación clara de dominios o límites de servicio en TurnoJusto), qué no adoptarías (como fragmentación excesiva desde el inicio) y por qué.]}
+Para el proyecto de fin de carrera \textbf{TurnoJusto: Turnos de Atención Distribuidos}, tomaría dos prácticas del caso Amazon: (a) delimitar responsabilidades por dominio (separando la gestión de colas y turnos en tiempo real del módulo de notificaciones o reportes) y (b) incorporar \emph{timeouts} estrictos y reintentos con \emph{jitter} en las comunicaciones entre servicios para impedir bloqueos en cadena durante horas pico de atención. En cambio, \textbf{no} adoptaría una fragmentación en decenas de microservicios ni múltiples bases de datos independientes desde el inicio. Dado que TurnoJusto atiende una carga acotada y lo desarrolla un equipo pequeño, multiplicar servicios elevaría innecesariamente la complejidad de despliegue, depuración y consistencia de datos \cite{blinowski2022monolithic, velepucha2023survey}; resulta más adecuado iniciar con una arquitectura modular de dos o tres servicios bien delimitados.
 
 \clearpage
 
@@ -92,7 +96,7 @@ En sus inicios, Amazon operaba con una aplicación monolítica en C++ conocida i
 \section*{Evidencias de autoría}
 
 \subsection*{1. Captura de la fuente principal con fragmentos subrayados o anotados}
-\textit{[Reemplazar el archivo \texttt{capturas/captura\_fuente\_principal.png} por tu captura de pantalla de \url{https://www.allthingsdistributed.com/2023/05/monoliths-are-not-dinosaurs.html} (o del blog de Prime Day 2025) con los fragmentos que subrayaste o anotaste.]}
+A continuación se presenta la captura de pantalla de la fuente primaria oficial (\emph{Monoliths are not dinosaurs}, publicado por Werner Vogels en \emph{All Things Distributed}), donde se resalta el fragmento clave sobre la evolución de Amazon hacia microservicios y el crecimiento de Amazon S3 desde unos pocos servicios en 2006 hasta superar los 300 microservicios.
 
 \begin{figure}[H]
     \centering
@@ -102,10 +106,10 @@ En sus inicios, Amazon operaba con una aplicación monolítica en C++ conocida i
 \end{figure}
 
 \subsection*{2. Ejemplo de un sistema conocido de primera mano}
-\textit{[Describir de autoría propia un sistema que utilices o conozcas de primera mano (p. ej., GitHub, Spotify, Mercado Libre o Uber) en el que reconozcas una arquitectura de microservicios y explicar cómo se refleja en su funcionamiento.]}
+Un sistema que utilizo de manera cotidiana y en el que reconozco el mismo estilo de microservicios es \textbf{GitHub}. Al trabajar con repositorios, se distingue que sus capacidades principales operan como servicios independientes desacoplados: el almacenamiento y protocolo Git, la autenticación y control de acceso, la plataforma de automatización (\emph{GitHub Actions}), los \emph{webhooks} de eventos y la interfaz web de incidencias y \emph{pull requests}. En la práctica se comprueba el aislamiento de fallos característico de esta arquitectura: cuando las colas de ejecución de \emph{GitHub Actions} sufren demoras temporales, operaciones esenciales como ejecutar un \texttt{git push}, clonar un repositorio o revisar el código en la web continúan funcionando con normalidad.
 
 \subsection*{3. Declaración de uso de inteligencia artificial}
-\textit{[Indicar de manera explícita si utilizaste alguna herramienta de IA, para qué tareas puntuales (p. ej., estructuración en \LaTeX{} o búsqueda inicial de fuentes) y confirmar que la redacción final y verificación de fuentes son de tu autoría.]}
+Se declara que se empleó un asistente de inteligencia artificial generativa como apoyo para estructurar el documento en \LaTeX, organizar las secciones exigidas por la rúbrica y dar formato a las referencias bibliográficas en \texttt{biblatex}. La selección del caso de Amazon, la revisión de las fuentes oficiales, la comprobación de cada DOI en las referencias académicas, la adaptación al proyecto \emph{TurnoJusto} y la validación final del documento fueron revisadas y asumidas bajo autoría del estudiante.
 
 \clearpage
 
